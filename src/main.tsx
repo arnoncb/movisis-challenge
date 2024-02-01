@@ -1,37 +1,43 @@
-import React from "react"
 import ReactDOM from "react-dom/client"
 import App from "./App.tsx"
-import "./index.css"
 import { createBrowserRouter, RouterProvider } from "react-router-dom"
 import { Home } from "./routes/Home.tsx"
-import { Products } from "./routes/Products.tsx"
 import { NotFound } from "./routes/NotFound.tsx"
-import { ProductDetails } from "./routes/ProductDetails.tsx"
+import { QueryClientProvider, QueryClient } from "react-query"
+import { Catalogue } from "./routes/Catalogue.tsx"
+import { InstrumentDetails } from "./routes/ProductDetails.tsx"
+import { GlobalStyle } from "./styles/global.ts"
+import { StrictMode } from "react"
+
+const queryClient = new QueryClient()
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <App />,
     errorElement: <NotFound />,
+    element: <App />,
     children: [
       {
         path: "/",
         element: <Home />,
       },
       {
-        path: "/produtos",
-        element: <Products />,
+        path: "/instrumentos",
+        element: <Catalogue />,
       },
       {
-        path: "/produto/:id",
-        element: <ProductDetails />,
+        path: "/instrumentos/:id",
+        element: <InstrumentDetails />,
       },
     ],
   },
 ])
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
-  <React.StrictMode>
-    <RouterProvider router={router} />
-  </React.StrictMode>
+  <StrictMode>
+    <QueryClientProvider client={queryClient}>
+      <GlobalStyle />
+      <RouterProvider router={router} />
+    </QueryClientProvider>
+  </StrictMode>
 )

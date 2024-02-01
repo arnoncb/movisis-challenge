@@ -1,4 +1,4 @@
-export const ProductDetails: React.FC = () => {
+export const InstrumentDetails: React.FC = () => {
   return (
     <>
       <h1>Product 1</h1>
